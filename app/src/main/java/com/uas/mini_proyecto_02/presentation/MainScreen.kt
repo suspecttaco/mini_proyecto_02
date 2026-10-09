@@ -162,39 +162,38 @@ fun CreateMainScreen() {
                 }
             }
         }
-    }
 
+        if (showTaskDialog) {
+            TaskDialog(
+                task = taskToEdit,
+                onDismiss = { showTaskDialog = false},
+                onConfirm = {
+                        title, description ->
 
-    if (showTaskDialog) {
-        TaskDialog(
-            task = taskToEdit,
-            onDismiss = { showTaskDialog = false},
-            onConfirm = {
-                title, description ->
+                    val editing = taskToEdit
 
-                val editing = taskToEdit
-
-                coroutineScope.launch {
-                    if (editing == null) {
-                        dao.insert(Task(title = title, description = description))
-                    } else {
-                        dao.update(editing.copy(title = title, description = description))
+                    coroutineScope.launch {
+                        if (editing == null) {
+                            dao.insert(Task(title = title, description = description))
+                        } else {
+                            dao.update(editing.copy(title = title, description = description))
+                        }
                     }
+
+                    showTaskDialog = false
                 }
+            )
+        }
 
-                showTaskDialog = false
-            }
-        )
-    }
-
-    if (showDeleteCompletedDialog) {
-        DeleteCompletedDialog(
-            completedCount = completedCount,
-            onDismiss = { showDeleteCompletedDialog = false },
-            onConfirm = {
-                coroutineScope.launch { dao.deleteCompleted() }
-                showDeleteCompletedDialog = false
-            }
-        )
+        if (showDeleteCompletedDialog) {
+            DeleteCompletedDialog(
+                completedCount = completedCount,
+                onDismiss = { showDeleteCompletedDialog = false },
+                onConfirm = {
+                    coroutineScope.launch { dao.deleteCompleted() }
+                    showDeleteCompletedDialog = false
+                }
+            )
+        }
     }
 }
