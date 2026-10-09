@@ -116,6 +116,13 @@ fun CreateMainScreen() {
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
+                    text = "Pendientes: $pendingCount | Completadas: $completedCount",
+                    style = MaterialTheme.typography.titleMedium
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(
                     text = "Filtro: ${filter.label} | Orden: ${sort.label}",
                     style = MaterialTheme.typography.bodySmall
                 )
