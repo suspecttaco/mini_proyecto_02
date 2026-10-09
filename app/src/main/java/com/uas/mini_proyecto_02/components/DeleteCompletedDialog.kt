@@ -22,9 +22,7 @@ fun DeleteCompletedDialog(
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                TextButton(onClick = onDismiss) {
-                    Text("Cancelar")
-                }
+                Text("Cancelar")
             }
         }
     )
